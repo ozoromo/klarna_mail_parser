@@ -12,8 +12,16 @@ lazy_static! {
 
 fn main() {
     let current_dir = env::current_dir().unwrap();
-    let input_folder = current_dir.join("mails/input");
-    let output_folder = current_dir.join("mails/output");
+    let input_folder = current_dir.join("klarna_mails/input");
+    let output_folder = current_dir.join("klarna_mails/output");
+
+    if !current_dir.join("/klarna_mails").exists() {
+        fs::create_dir_all(&input_folder).unwrap();
+        fs::create_dir_all(&output_folder).unwrap();
+        println!("Looks like you might be running this the first time, I created the folder for you");
+        println!("Place your emails in .eml format into the input folder and run the programm again");
+        println!("After running the programm again the resulting csv file will be saved in the output folder");
+    }
 
     // Check if the folders exist
     if !input_folder.exists() {
